@@ -3,6 +3,7 @@ import "./App.css"
 
 function App() {
   const [search, setSearch] = useState("")
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
 
   const photos = [
     { id: 1, url: "https://picsum.photos/id/1015/300/200" },
@@ -31,9 +32,21 @@ function App() {
 
       <div className="grid">
         {filteredPhotos.map((photo) => (
-          <img key={photo.id} src={photo.url} alt={`Photo ${photo.id}`} />
+          <img
+            key={photo.id}
+            src={photo.url}
+            alt={`Photo ${photo.id}`}
+            onClick={() => setSelectedPhoto(photo.url)}
+            className="clickable"
+          />
         ))}
       </div>
+
+      {selectedPhoto && (
+        <div className="modal" onClick={() => setSelectedPhoto(null)}>
+          <img src={selectedPhoto} alt="Selected" className="modal-img" />
+        </div>
+      )}
     </div>
   )
 }
